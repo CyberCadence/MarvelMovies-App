@@ -1,6 +1,6 @@
 import 'dart:convert';
-
 import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:marvelapi/Models/MOdelVIew.dart';
@@ -14,7 +14,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final List<McuModel> McuMoviesList = [];
-  final marvelApiUrl = "https://mcuapi.herokuapp.com/api/v1/movies";
+
 
   @override
   void initState() {
@@ -22,8 +22,7 @@ class _HomePageState extends State<HomePage> {
     getApi();
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget buildnew( McuModel mcuModel) {
     return Scaffold(backgroundColor: Colors.black45,
         body: McuMoviesList.isNotEmpty
             ? GridView.builder(
@@ -53,23 +52,5 @@ class _HomePageState extends State<HomePage> {
               ));
   }
 
-  void getApi() async {
-    final uri = Uri.parse(marvelApiUrl);
-    final http.Response _response = await http.get(uri);
-
-    if (_response.statusCode == 200) {
-      final responseBody = _response.body;
-      final result = jsonDecode(responseBody);
-
-      final List decodedData = result['data'];
-
-      for (var i = 0; i < decodedData.length; i++) {
-        final McuMovies =
-            McuModel.fromJson(decodedData[i] as Map<String, dynamic>);
-        McuMoviesList.add(McuMovies);
-      }
-    } else {
-      print('error  loading');
-    }
-  }
+  
 }
